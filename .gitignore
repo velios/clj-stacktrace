@@ -1,6 +1,10 @@
 *.jar
 *.xml
+*.iml
 /.lein-failures
 /.lein-deps-sum
 /target
 /pom.xml.asc
+/.idea
+/.clj-kondo/.cache
+/.lsp/.cache

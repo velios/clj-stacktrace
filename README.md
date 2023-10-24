@@ -1,3 +1,26 @@
+# my-additional-docs
+
+To build and install in local Maven repository:
+  lein install
+
+Import to clojure project:
+```clj
+{:user {:dependencies [[com.github.velios/clj-stacktrace "0.2.8"]]}}
+```
+
+Import to maven project(like org.clojure/clojure):
+```xml
+<dependencies>
+    ...
+    <dependency>
+      <groupId>com.github.velios</groupId>
+      <artifactId>clj-stacktrace</artifactId>
+      <version>0.2.8</version>
+    </dependency>
+    ...
+</dependencies>
+```
+
 # clj-stacktrace
 
 A library for creating more readable stacktraces in Clojure programs.

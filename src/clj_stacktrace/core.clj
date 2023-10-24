@@ -63,23 +63,27 @@
   (let [class-name (.getClassName elem)
         file       (.getFileName  elem)
         line       (let [l (.getLineNumber elem)] (if (pos? l) l))
-        parsed     {:file file :line line}]
+        method     (.getMethodName elem)
+        parsed     {:file file :line line :method method}]
     (if (clojure-code? class-name file)
       (assoc parsed
-        :clojure true
-        :ns      (clojure-ns class-name)
-        :fn      (clojure-fn class-name)
-        :anon-fn (clojure-anon-fn? class-name))
+             :clojure true
+             :ns      (clojure-ns class-name)
+             :fn      (clojure-fn class-name)
+
+             :anon-fn (clojure-anon-fn? class-name))
       (assoc parsed
-        :java true
-        :class class-name
-        :method (.getMethodName elem)))))
+             :java true
+             :class class-name))))
 
 (defn parse-trace-elems
   "Returns a seq of maps providing usefull information about the java stack
   trace elements. See parse-trace-elem."
   [elems]
-  (map parse-trace-elem elems))
+  (->> elems
+       (map parse-trace-elem)
+       (filter :clojure)
+       (filter (fn [v] (= "invoke" (:method v))))))
 
 (defn- trim-redundant
   "Returns the portion of the tail of causer-elems that is not duplicated in
